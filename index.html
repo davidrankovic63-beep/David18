@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Davidov 18. rođendan</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="page">
+
+        <div class="top-line"></div>
+        <div class="number">
+            18.
+        </div>
+
+        <div class="name">
+            David
+        </div>
+
+        <div class="divider">
+            <div class="divider-line"></div>
+            <div class="diamond"></div>
+            <div class="divider-line right"></div>
+        </div>
+
+        <section class="welcome">
+            Dobrodošli na moj<br>
+            18. rođendan
+        </section>
+
+        <p class="description">
+            Ulepšajte mi uspomene sa večerašnje proslave
+            i podelite svoje fotografije sa mnom.
+        </p>
+
+        <section class="upload-area">
+
+            <div class="upload-title">
+                Podelite svoje fotografije
+            </div>
+
+            <div class="upload-subtitle">
+                Izaberite jednu ili više fotografija
+            </div>
+
+            <label class="choose">
+                IZABERI FOTOGRAFIJE
+
+                <input
+                    type="file"
+                    id="files"
+                    accept="image/*"
+                    multiple
+                >
+            </label>
+
+            <div id="fileList"></div>
+
+            <button
+                id="uploadButton"
+                disabled>
+                POŠALJI FOTOGRAFIJE
+            </button>
+
+            <div id="status"></div>
+
+        </section>
+
+        <div class="bottom-line"></div>
+
+        <div class="footer">
+            Hvala što ste deo moje priče
+        </div>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
