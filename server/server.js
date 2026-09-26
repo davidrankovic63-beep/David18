@@ -21,10 +21,7 @@ const TOKEN_PATH = path.join(
 );
 
 
-// -------------------------
-// Google token
-// -------------------------
-
+// Učitavanje Google tokena
 function loadTokens() {
 
     if (!fs.existsSync(TOKEN_PATH)) {
@@ -40,6 +37,7 @@ function loadTokens() {
 }
 
 
+// Čuvanje Google tokena
 function saveTokens(tokens) {
 
     fs.writeFileSync(
@@ -49,10 +47,7 @@ function saveTokens(tokens) {
 }
 
 
-// -------------------------
 // Google OAuth
-// -------------------------
-
 const oauth2Client = new google.auth.OAuth2(
     process.env.GOOGLE_CLIENT_ID,
     process.env.GOOGLE_CLIENT_SECRET,
@@ -60,17 +55,29 @@ const oauth2Client = new google.auth.OAuth2(
 );
 
 
+// ==========================================
+// GOOGLE AUTORIZACIJA
+// ==========================================
+
+// Na Renderu koristimo refresh token iz Environment Variables.
+// Lokalno, ako njega nema, koristimo token.json.
+
 const savedTokens = loadTokens();
 
-if (savedTokens) {
+if (process.env.GOOGLE_REFRESH_TOKEN) {
+
+    oauth2Client.setCredentials({
+        refresh_token: process.env.GOOGLE_REFRESH_TOKEN
+    });
+
+} else if (savedTokens) {
+
     oauth2Client.setCredentials(savedTokens);
+
 }
 
 
-// -------------------------
 // Google login
-// -------------------------
-
 app.get("/auth", (req, res) => {
 
     const authUrl =
@@ -89,10 +96,7 @@ app.get("/auth", (req, res) => {
 });
 
 
-// -------------------------
 // Google callback
-// -------------------------
-
 app.get("/oauth2callback", async (req, res) => {
 
     const code = req.query.code;
@@ -133,9 +137,9 @@ app.get("/oauth2callback", async (req, res) => {
 });
 
 
-// -------------------------
-// Upload fotografija
-// -------------------------
+// ==========================================
+// UPLOAD FOTOGRAFIJA
+// ==========================================
 
 const upload = multer({
     dest: path.join(__dirname, "temp")
@@ -240,9 +244,9 @@ app.post(
 );
 
 
-// -------------------------
-// Prikaz sajta
-// -------------------------
+// ==========================================
+// PRIKAZ SAJTA
+// ==========================================
 
 app.use(
     express.static(
@@ -251,9 +255,9 @@ app.use(
 );
 
 
-// -------------------------
-// Pokretanje servera
-// -------------------------
+// ==========================================
+// POKRETANJE SERVERA
+// ==========================================
 
 app.listen(PORT, () => {
 
